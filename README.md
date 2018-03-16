@@ -9,6 +9,9 @@ editor, this will work with any editor (even Pawno, if you're oldschool) but VS
 Code is my personal favourite and my recommendation - I used Sublime for years
 and tried Atom and I prefer VS Code.
 
+This tutorial also assumes you're using Windows - as far as I know, most users
+are on Windows but the tools (vscode, sampctl) work on all platforms.
+
 ## Getting Started
 
 ### sampctl
@@ -253,3 +256,44 @@ to remove the notification on the line with the warning.
 You can leave the build watcher task running constantly and it will always be
 recompiling your code and updating the editor view so you can focus on what's
 important: the code.
+
+## Run The Code
+
+Okay that's enough building, it's time to actually run the code.
+
+Now you may be thinking, this is Pawn, surely you'd need to get the
+`samp-server.exe` files, create a `gamemodes` folder, create a gamemode, set up
+`server.cfg` to load your gamemode, double click the `samp-server.exe` and
+observe the output.
+
+Nope.
+
+Just type:
+
+```powershell
+sampctl package run
+```
+
+And the package will just run, no need to worry about the rest, sampctl does all
+that for you.
+
+## Run The Code - But In a Cooler Way
+
+So if you remember from when I listed the tasks in `tasks.json` there is a
+`run tests` and `run tests watcher` - these do exactly what you expect. The
+first simply runs `sampctl package run` and the second does what the build
+watcher does, but also runs the package.
+
+This can be a very useful development tool, especially if you have two monitors
+because you can run vscode on one and GTA in another (in Windowed mode) and
+seamlessly write code, save it and jump in game as the server restarts with the
+new code.
+
+Another use-case for the run tests watcher task is unit tests with y_testing,
+but that's a topic for another day :)
+
+## Conclusion
+
+Hopefully you found this useful. If you're new to Pawn or just new to sampctl, I
+hope you found this useful and if you have any questions about this workflow,
+please drop a reply below and I'll help you out!

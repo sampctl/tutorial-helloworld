@@ -1,0 +1,256 @@
+[COLOR="#FF4700"][SIZE="7"][B]sampctl hello world[/B][/SIZE][/COLOR]
+
+A simple sampctl tutorial for building a “hello world” library using the recommended sampctl workflow and tools.
+
+The goal of this tutorial is to make you familiar with the [i]workflow[/i] of building libraries with sampctl. This tutorial uses Visual Studio Code as an editor, this will work with any editor (even Pawno, if you’re oldschool) but VS Code is my personal favourite and my recommendation - I used Sublime for years and tried Atom and I prefer VS Code.
+
+This tutorial also assumes you’re using Windows - as far as I know, most users are on Windows but the tools (vscode, sampctl) work on all platforms.
+
+[COLOR="RoyalBlue"][SIZE="6"][B]Getting Started[/B][/SIZE][/COLOR]
+
+[COLOR="DeepSkyBlue"][SIZE="5"][B]sampctl[/B][/SIZE][/COLOR]
+
+Obviously you need sampctl installed - this is a super simple process and is described in the official thread or the readme.
+
+[URL="http://forum.sa-mp.com/showthread.php?t=651159"][IMG]https://shields.southcla.ws/badge/get-sampctl-2f2f2f.svg?style=for-the-badge[/IMG][/URL]
+
+[COLOR="DeepSkyBlue"][SIZE="5"][B]Visual Studio Code (“vscode”)[/B][/SIZE][/COLOR]
+
+Get vscode installed - if you’re a Sublime user you can follow along in the terminal but vscode works really well with sampctl and you’ll be impressed so give it a try - you can always uninstall it after if you don’t like it!
+
+[URL="https://code.visualstudio.com/"][IMG]https://shields.southcla.ws/badge/get-vscode-373277.svg?style=for-the-badge[/IMG][/URL]
+
+A lot of people think this is Visual Studio - the huge C++/C# development environment - this is incorrect, VS [i]Code[/i] is like the little brother of Visual Studio and is much more light-weight with faster start-up time and a simpler interface.
+
+[COLOR="DeepSkyBlue"][SIZE="5"][B]Pawn Tools for vscode[/B][/SIZE][/COLOR]
+
+This is an extension pack I built with help from the community for vscode, it adds Pawn language syntax highlighting and some additional tools that integrate with sampctl.
+
+Installing it is as simple as:
+
+[IMG]https://i.imgur.com/BqOq1Eq.gif[/IMG]
+
+[URL="http://forum.sa-mp.com/showthread.php?t=647134"][IMG]https://shields.southcla.ws/badge/get-pawn--tools-FFA000.svg?style=for-the-badge[/IMG][/URL]
+
+[COLOR="DeepSkyBlue"][SIZE="5"][B]Problems?[/B][/SIZE][/COLOR]
+
+If you run into issues, just @ me on Discord or ask in this thread!
+
+[COLOR="RoyalBlue"][SIZE="6"][B]Create a Folder for your Project[/B][/SIZE][/COLOR]
+
+First you need to create a directory dedicated to your package. This is standard in many languages. It’s common for Pawn includes to only exist in a single .inc so it might be tempting to keep all your .inc files in a single folder - don’t do this! You’ll get lost and disorganised and Pawn Packages (discussed below) aren’t composed of just a single .inc file but a few additional files so it’s necessary to bundle all of these together into a folder.
+
+Once you’ve done that, open the [i]folder[/i] in vscode (“File” > “Open Folder…”). This might be a new concept to you if you’re coming from Pawno or other simple editors. vscode can open individual files [i]however[/i] when working on a [i]project[/i] where you have an entire folder [i]dedicated[/i] to that project, you can open the entire folder in a single instance of vscode. This makes jumping between files really easy and with the [i]integrated terminal[/i] it becomes trivial to run commands.
+
+[COLOR="RoyalBlue"][SIZE="6"][B]Create a Package[/B][/SIZE][/COLOR]
+
+So now you have all the tools installed and set up a folder you can create a [i]Pawn Package[/i].
+
+[URL="https://github.com/Southclaws/sampctl/wiki/Packages"]Pawn Packages are described in detail here[/URL] - essentially, they are just includes but with a bit of extra information to help sampctl understand how to get them and build them - to help sampctl help [i]you[/i]!
+
+So how do we do this? Open up the [URL="https://code.visualstudio.com/docs/editor/integrated-terminal"]vscode [i]integrated terminal[/i][/URL] with CTRL+` or by clicking “View” > “Integrated Terminal” on the menu at the top.
+
+This will open your default shell at the bottom of the vscode window - on Windows this is either CMD or PowerShell, doesn’t really matter which you use.
+
+[QUOTE]
+
+side note: if you’re not using vscode, you can achieve the same results below
+by just using CMD or PowerShell directly. Shift+Right Click inside your
+project’s folder in the File Explorer window and clicking “Open Command Prompt
+here” or “Open PowerShell here”.
+
+[/QUOTE]
+
+Once you’ve got a terminal open, simply enter the following command:
+
+[CODE]
+sampctl package init
+[/CODE]
+
+And follow the on-screen menus to create your package, for example:
+
+[IMG]http://i.imgur.com/kUYsnUW.gif[/IMG]
+
+This will generate the following files:
+
+[LIST]
+
+[*][FONT="courier new"].gitattributes[/FONT]: tells [i]GitHub[/i] to mark your repo language as “Pawn”
+
+[*][FONT="courier new"].gitignore[/FONT]: tells [i]git[/i] to ignore certain files
+
+[*][FONT="courier new"].vscode[/FONT]: contains some vscode-specific settings
+
+[*][FONT="courier new"]README.md[/FONT]: documentation template for your package - edit this later
+
+[*][FONT="courier new"]dependencies[/FONT]: this folder contains the includes your package requires
+
+[*][FONT="courier new"]pawn.json[/FONT]: this file is very special!
+
+
+[/LIST]
+
+Feel free to familiarise yourself with these files. They are all necessary to help certain tools work well. For example, the [FONT="courier new"].git...[/FONT] files are for Git and GitHub, [FONT="courier new"].vscode[/FONT] helps your editor provide useful development features and [FONT="courier new"]pawn.json[/FONT] is to help sampctl configure your package and speed up your workflow.
+
+[COLOR="RoyalBlue"][SIZE="6"][B]Write Some Code![/B][/SIZE][/COLOR]
+
+Okay that’s all well and good but we still haven’t written a single line of code yet! We’ll do that now.
+
+This “Hello World” package isn’t a Pawn tutorial, so the code itself will be very simple.
+
+We’re going to write [i]and test[/i] a library that simply sends a Hello World message to the server console and to players that join the server.
+
+Create a file called [FONT="courier new"]helloworld.inc[/FONT] with the following contents:
+
+[code][FONT="courier new"]
+[COLOR="Blue"]#include <a_samp>[/COLOR]
+
+HelloWorld(playerid) {
+    [COLOR="Blue"]if[/COLOR](IsPlayerConnected(playerid)) {
+        printf([COLOR="Purple"]"Saying hello to %!d(MISSING)"[/COLOR], playerid);
+        SendClientMessage(playerid, [COLOR="Purple"]0[/COLOR]xFF[COLOR="Purple"]3200[/COLOR]FF, [COLOR="Purple"]"Hello World!"[/COLOR]);
+    } [COLOR="Blue"]else[/COLOR] {
+        print([COLOR="Purple"]"Hello World sampctl!"[/COLOR]);
+    }
+}
+
+[COLOR="DeepSkyBlue"]public[/COLOR] OnPlayerConnect(playerid) {
+    HelloWorld(playerid);
+    return [COLOR="Purple"]1[/COLOR];
+}
+
+[/FONT][/code]
+
+If the code isn’t highlighted, click the syntax button at the bottom right of the vscode window, it probably says “Plain Text” so click it and select “Pawn” from the drop-down menu.
+
+[COLOR="RoyalBlue"][SIZE="6"][B]Build The Code[/B][/SIZE][/COLOR]
+
+Now we have some source code but there’s something missing…
+
+You don’t typically [i]compile[/i] .inc files - they are meant for including. What we need is an [i]entry[/i] file to compile from.
+
+What makes an entry file an entry file? Two properties:
+
+[LIST]
+
+[*]It must have a [FONT="courier new"]main()[/FONT] function
+
+[*]It must be listed in the [FONT="courier new"]pawn.json[/FONT] file in the [FONT="courier new"]entry[/FONT] field
+
+
+[/LIST]
+
+Open up your package’s [FONT="courier new"]pawn.json[/FONT] file, you should see something like this:
+
+[PHP]
+{
+  "user": "Southclaws",
+  "repo": "hello-world",
+  "entry": "test.pwn",
+  "output": "test.amx",
+  "dependencies": ["sampctl/samp-stdlib"]
+}
+[/PHP]
+
+As you can see, the [FONT="courier new"]sampctl package init[/FONT] process pre-populated the [FONT="courier new"]entry[/FONT] and [FONT="courier new"]output[/FONT] fields. These fields are simple, [FONT="courier new"]entry[/FONT] is the file passed to the compiler and [FONT="courier new"]output[/FONT] is the name of the resulting .amx file.
+
+Since [FONT="courier new"]test.pwn[/FONT] is already there (this is the default) go ahead and create a file named [FONT="courier new"]test.pwn[/FONT] in your workspace by clicking the “New File” button:
+
+[IMG]https://i.imgur.com/EOWfo2N.gif[/IMG]
+
+And in this file, add the following code:
+
+[code][FONT="courier new"]
+#include [COLOR="Purple"]"helloworld.inc"[/COLOR] [COLOR="Green"]// include your library[/COLOR]
+
+main() {
+    [COLOR="Green"]// pass an invalid player ID so we get [COLOR="Purple"]"Hello World sampctl!"[/COLOR] in the console[/COLOR]
+    HelloWorld([COLOR="Purple"]-1[/COLOR]);
+}
+
+[/FONT][/code]
+
+Now, in the terminal, run [FONT="courier new"]sampctl package build[/FONT] - this will [i]magically[/i] compile the package and output a [FONT="courier new"]test.amx[/FONT] file to your workspace.
+
+[COLOR="RoyalBlue"][SIZE="6"][B]Build The Code - But In a Cooler Way[/B][/SIZE][/COLOR]
+
+Okay so you built some code, nice, but using the terminal isn’t really taking advantage of the neat features of vscode and the Pawn Tools extension.
+
+Without getting into the details of the [URL="https://code.visualstudio.com/Docs/editor/tasks"]vscode tasks.json[/URL] file format and how powerful it is, I’ll quickly go over what tasks are.
+
+Inside the [FONT="courier new"].vscode[/FONT] directory, you’ll find a file named [FONT="courier new"]tasks.json[/FONT], this file declares 4 tasks:
+
+[LIST]
+
+[*][FONT="courier new"]build only[/FONT]: this just builds the package by running
+[FONT="courier new"]sampctl package build[/FONT] - same as you did in the section above
+
+[*][FONT="courier new"]build watcher[/FONT]: this monitors the package and builds it whenever a file
+changes
+
+[*][FONT="courier new"]run tests[/FONT]: this runs the package
+
+[*][FONT="courier new"]run tests watcher[/FONT]: this monitors the package and builds it whenever a file
+changes
+
+
+[/LIST]
+
+The [FONT="courier new"]watcher[/FONT] tasks are [i]really[/i] useful and the [FONT="courier new"]run[/FONT] tasks we’ll get into in the next section.
+
+So to really show the power of this, you need to introduce bad code to trigger an error, in the [FONT="courier new"]main()[/FONT] function, add an unused variable:
+
+[code][FONT="courier new"]
+main() {
+    [COLOR="Blue"]new[/COLOR] unused;
+    HelloWorld([COLOR="Purple"]-1[/COLOR]);
+}
+
+[/FONT][/code]
+
+Then hit CTRL+Shift+B to run the build task, your editor will highlight the line and also display it in the “Problems” panel at the bottom of the vscode window.
+
+[COLOR="RoyalBlue"][SIZE="6"][B]Build The Code - But In an [i]Even[/i] Cooler Way![/B][/SIZE][/COLOR]
+
+So you can build code with keyboard shortcuts, big woop, Pawno can do this…
+
+The real magic here is the [FONT="courier new"]build watcher[/FONT] task. To run this, hit CTRL+Shift+P to [URL="https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette"]open the [i]command palette[/i][/URL].
+
+This is similar to the terminal but it’s a special area to write commands to vscode itself, it allows you to control the editor with just your keyboard, which can seriously speed up your workflow.
+
+In the command palette, type [FONT="courier new"]Run task[/FONT], hit enter or click it and then hit [FONT="courier new"]build watcher[/FONT]:
+
+[IMG]https://i.imgur.com/WIzVhjN.gif[/IMG]
+
+Now remove the [FONT="courier new"]new unused;[/FONT] you added earlier and save the file with CTRL+S - watch as sampctl will recompile your code and vscode will update the interface to remove the notification on the line with the warning.
+
+You can leave the build watcher task running constantly and it will always be recompiling your code and updating the editor view so you can focus on what’s important: the code.
+
+[COLOR="RoyalBlue"][SIZE="6"][B]Run The Code[/B][/SIZE][/COLOR]
+
+Okay that’s enough building, it’s time to actually run the code.
+
+Now you may be thinking, this is Pawn, surely you’d need to get the [FONT="courier new"]samp-server.exe[/FONT] files, create a [FONT="courier new"]gamemodes[/FONT] folder, create a gamemode, set up [FONT="courier new"]server.cfg[/FONT] to load your gamemode, double click the [FONT="courier new"]samp-server.exe[/FONT] and observe the output.
+
+Nope.
+
+Just type:
+
+[CODE]
+sampctl package run
+[/CODE]
+
+And the package will just run, no need to worry about the rest, sampctl does all that for you.
+
+[COLOR="RoyalBlue"][SIZE="6"][B]Run The Code - But In a Cooler Way[/B][/SIZE][/COLOR]
+
+So if you remember from when I listed the tasks in [FONT="courier new"]tasks.json[/FONT] there is a [FONT="courier new"]run tests[/FONT] and [FONT="courier new"]run tests watcher[/FONT] - these do exactly what you expect. The first simply runs [FONT="courier new"]sampctl package run[/FONT] and the second does what the build watcher does, but also runs the package.
+
+This can be a very useful development tool, especially if you have two monitors because you can run vscode on one and GTA in another (in Windowed mode) and seamlessly write code, save it and jump in game as the server restarts with the new code.
+
+Another use-case for the run tests watcher task is unit tests with y_testing, but that’s a topic for another day :)
+
+[COLOR="RoyalBlue"][SIZE="6"][B]Conclusion[/B][/SIZE][/COLOR]
+
+Hopefully you found this useful. If you’re new to Pawn or just new to sampctl, I hope you found this useful and if you have any questions about this workflow, please drop a reply below and I’ll help you out!
+

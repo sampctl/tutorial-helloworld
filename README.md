@@ -16,7 +16,7 @@ and tried Atom and I prefer VS Code.
 Obviously you need sampctl installed - this is a super simple process and is
 described in the official thread or the readme.
 
-* [![get-sampctl](https://shields.southcla.ws/badge/get-sampctl-2f2f2f.svg?style=for-the-badge)](http://forum.sa-mp.com/showthread.php?t=651159)
+[![get-sampctl](https://shields.southcla.ws/badge/get-sampctl-2f2f2f.svg?style=for-the-badge)](http://forum.sa-mp.com/showthread.php?t=651159)
 
 ### Visual Studio Code ("vscode")
 
@@ -24,7 +24,7 @@ Get vscode installed - if you're a Sublime user you can follow along in the
 terminal but vscode works really well with sampctl and you'll be impressed so
 give it a try - you can always uninstall it after if you don't like it!
 
-* [![get-vscode](https://shields.southcla.ws/badge/get-vscode-373277.svg?style=for-the-badge)](https://code.visualstudio.com/)
+[![get-vscode](https://shields.southcla.ws/badge/get-vscode-373277.svg?style=for-the-badge)](https://code.visualstudio.com/)
 
 A lot of people think this is Visual Studio - the huge C++/C# development
 environment - this is incorrect, VS _Code_ is like the little brother of Visual
@@ -41,7 +41,7 @@ Installing it is as simple as:
 
 ![https://i.imgur.com/BqOq1Eq.gif](https://i.imgur.com/BqOq1Eq.gif)
 
-* [![get-pawntools](https://shields.southcla.ws/badge/get-pawn--tools-373277.svg?style=for-the-badge)](http://forum.sa-mp.com/showthread.php?t=647134)
+[![get-pawntools](https://shields.southcla.ws/badge/get-pawn--tools-373277.svg?style=for-the-badge)](http://forum.sa-mp.com/showthread.php?t=647134)
 
 ### Problems?
 

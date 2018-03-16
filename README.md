@@ -42,7 +42,7 @@ with sampctl.
 
 Installing it is as simple as:
 
-![https://i.imgur.com/BqOq1Eq.gif](https://i.imgur.com/BqOq1Eq.gif)
+![vscode-pawntools](https://i.imgur.com/BqOq1Eq.gif)
 
 [![get-pawntools](https://shields.southcla.ws/badge/get-pawn--tools-FFA000.svg?style=for-the-badge)](http://forum.sa-mp.com/showthread.php?t=647134)
 
